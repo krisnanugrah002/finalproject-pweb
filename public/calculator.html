@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Kesehatan - FitMate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">Fit<span>Mate</span>.</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="calculator.html" class="active">Kalkulator BMI</a></li>
+                <li><a href="recipes.html">Menu Sehat</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Masuk</a>
+                <a href="register.html" class="btn btn-primary">Daftar Sekarang</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Cek Kondisi Tubuhmu</h2>
+                <p>Hitung BMI dan kebutuhan kalori harian (TDEE) secara instan.</p>
+            </div>
+
+            <div class="grid-3" style="grid-template-columns: 1fr 1fr; max-width: 900px; margin: 0 auto; gap: 40px;">
+                
+                <!-- FORM INPUT -->
+                <div class="card form-container" style="margin: 0; padding: 30px;">
+                    <form id="calcForm">
+                        <div class="form-group">
+                            <label class="form-label">Jenis Kelamin</label>
+                            <div style="display: flex; gap: 15px;">
+                                <label style="cursor: pointer;"><input type="radio" name="gender" value="male" checked> Laki-laki</label>
+                                <label style="cursor: pointer;"><input type="radio" name="gender" value="female"> Perempuan</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Usia (Tahun)</label>
+                            <input type="number" id="age" class="form-input" placeholder="Contoh: 20" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Tinggi Badan (cm)</label>
+                            <input type="number" id="height" class="form-input" placeholder="Contoh: 170" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Berat Badan (kg)</label>
+                            <input type="number" id="weight" class="form-input" placeholder="Contoh: 60" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Aktivitas Fisik</label>
+                            <select id="activity" class="form-select">
+                                <option value="1.2">Tidak Aktif (Rebahan terus)</option>
+                                <option value="1.375">Ringan (Olahraga 1-3 hari/minggu)</option>
+                                <option value="1.55">Sedang (Olahraga 3-5 hari/minggu)</option>
+                                <option value="1.725">Aktif (Olahraga 6-7 hari/minggu)</option>
+                                <option value="1.9">Sangat Aktif (Atlet/Fisik berat)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Hitung Sekarang</button>
+                    </form>
+                </div>
+
+                <!-- HASIL (Hidden by default) -->
+                <div id="resultArea" class="card" style="display: none; text-align: center; padding: 40px; justify-content: center; flex-direction: column;">
+                    <h3 style="color: var(--text-gray);">Hasil Analisa</h3>
+                    
+                    <div style="margin: 30px 0;">
+                        <span style="font-size: 0.9rem; color: var(--text-gray);">BMI Kamu</span>
+                        <h1 id="bmiValue" style="font-size: 3.5rem; color: var(--primary-color); line-height: 1;">00.0</h1>
+                        <span id="bmiCategory" class="tag" style="font-size: 1rem; margin-top: 10px; display: inline-block;">Normal</span>
+                    </div>
+
+                    <div style="border-top: 1px solid #eee; padding-top: 20px;">
+                        <span style="font-size: 0.9rem; color: var(--text-gray);">Kebutuhan Kalori (TDEE)</span>
+                        <h2 id="tdeeValue" style="color: var(--text-dark);">0 kkal / hari</h2>
+                        <p style="font-size: 0.8rem; margin-top: 10px; color: var(--text-gray);">Untuk menjaga berat badan saat ini.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 FitMate.</p>
+        </div>
+    </footer>
+
+    <script src="js/calculator.js"></script>
+</body>
+</html>

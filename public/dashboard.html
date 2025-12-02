@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Saya - FitMate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Grafik lebih lebar dari ringkasan */
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .stat-number { font-size: 2rem; font-weight: 700; color: var(--primary-color); }
+        .stat-label { color: var(--text-gray); font-size: 0.9rem; }
+        
+        .tab-menu {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-gray);
+            border-bottom: 3px solid transparent;
+        }
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        /* List Item Style */
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">Fit<span>Mate</span>.</a>
+            <div class="auth-buttons">
+                <!-- Nanti diganti nama user dinamis -->
+                <span style="margin-right: 15px; font-weight: 600;">Halo, User!</span>
+                <button id="btnLogout" class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">Keluar</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section bg-light" style="padding-top: 30px;">
+        <div class="container">
+            <!-- HEADER DASHBOARD -->
+            <div style="margin-bottom: 30px;">
+                <h2>Overview Hari Ini</h2>
+                <p class="text-gray" id="currentDate">Senin, 1 Januari 2025</p>
+            </div>
+
+            <!-- RINGKASAN ATAS -->
+            <div class="grid-3 dashboard-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalFood">0</div>
+                    <div class="stat-label">Kalori Masuk (Makan)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalBurned" style="color: #f97316;">0</div>
+                    <div class="stat-label">Kalori Terbakar (Aktivitas)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="netCalories">0</div>
+                    <div class="stat-label">Net Kalori</div>
+                </div>
+            </div>
+
+            <!-- GRAFIK BERAT BADAN -->
+             <div class="card" style="margin-bottom: 30px;">
+                <h3 style="margin-bottom: 20px;">Grafik Berat Badan (7 Hari Terakhir)</h3>
+                <div style="height: 300px;">
+                    <canvas id="weightChart"></canvas>
+                </div>
+             </div>
+
+             <!-- JURNAL INPUT AREA (Tabs) -->
+             <div class="card">
+                <div class="tab-menu">
+                    <button class="tab-btn active" onclick="switchTab('food')">🍽️ Jurnal Makanan</button>
+                    <button class="tab-btn" onclick="switchTab('activity')">🔥 Jurnal Aktivitas</button>
+                    <button class="tab-btn" onclick="switchTab('weight')">⚖️ Update Berat</button>
+                </div>
+
+                <!-- TAB 1: MAKANAN -->
+                <div id="tab-food" class="tab-content">
+                    <form id="foodForm" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <input type="text" placeholder="Nama Makanan (misal: Nasi Goreng)" class="form-input" style="flex: 2" required>
+                        <input type="number" placeholder="Kalori" class="form-input" style="flex: 1" required>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </form>
+                    <div id="foodList">
+                        <!-- List makanan akan muncul disini -->
+                        <div style="text-align: center; color: #999; padding: 20px;">Belum ada makanan dicatat hari ini</div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: AKTIVITAS (Hidden) -->
+                <div id="tab-activity" class="tab-content" style="display: none;">
+                    <form id="activityForm" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <input type="text" placeholder="Nama Aktivitas (misal: Lari Pagi)" class="form-input" style="flex: 2" required>
+                        <input type="number" placeholder="Kalori Terbakar" class="form-input" style="flex: 1" required>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </form>
+                    <div id="activityList">
+                        <div style="text-align: center; color: #999; padding: 20px;">Belum ada aktivitas dicatat hari ini</div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: BERAT BADAN (Hidden) -->
+                <div id="tab-weight" class="tab-content" style="display: none;">
+                    <form id="weightForm" style="max-width: 400px;">
+                        <div class="form-group">
+                            <label>Berat Badan Hari Ini (kg)</label>
+                            <input type="number" step="0.1" class="form-input" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Simpan Progress</button>
+                    </form>
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <!-- Script Chart & Logic -->
+    <script src="js/dashboard.js"></script>
+    <script>
+        // Simple Tab Switcher Logic inline for simplicity
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            // Show selected
+            document.getElementById(`tab-${tabName}`).style.display = 'block';
+            // Highlight button (Need event target logic, but simple generic selector works)
+            const btns = document.querySelectorAll('.tab-btn');
+            if(tabName === 'food') btns[0].classList.add('active');
+            if(tabName === 'activity') btns[1].classList.add('active');
+            if(tabName === 'weight') btns[2].classList.add('active');
+        }
+    </script>
+</body>
+</html>
