@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Resep Baru - FitMate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">Fit<span>Mate</span>.</a>
+        </div>
+    </nav>
+
+    <section class="section bg-light">
+        <div class="container">
+            <div class="form-container">
+                <div class="section-title">
+                    <h2>Bagikan Resep Sehatmu</h2>
+                    <p>Bantu orang lain hidup lebih sehat dengan resep andalanmu.</p>
+                </div>
+
+                <form id="addRecipeForm">
+                    <div class="form-group">
+                        <label class="form-label">Judul Resep</label>
+                        <input type="text" name="title" class="form-input" placeholder="Contoh: Salad Buah Segar" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Estimasi Kalori (per porsi)</label>
+                        <input type="number" name="calories" class="form-input" placeholder="Contoh: 250" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Kategori</label>
+                        <select name="category" class="form-select">
+                            <option value="Sarapan">Sarapan</option>
+                            <option value="Makan Siang">Makan Siang</option>
+                            <option value="Makan Malam">Makan Malam</option>
+                            <option value="Cemilan">Cemilan/Minuman</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Bahan-bahan</label>
+                        <textarea name="ingredients" class="form-textarea" placeholder="Tuliskan bahan-bahan di sini..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Langkah Pembuatan</label>
+                        <textarea name="instructions" class="form-textarea" placeholder="Langkah 1: Kupas buah..." required></textarea>
+                    </div>
+
+                    <!-- Untuk MVP, kita pakai URL gambar dulu, bukan Upload File agar lebih mudah -->
+                    <div class="form-group">
+                        <label class="form-label">URL Foto Makanan</label>
+                        <input type="url" name="image_url" class="form-input" placeholder="https://...">
+                        <small style="color: var(--text-gray); font-size: 0.8rem;">Masukkan link gambar dari internet.</small>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Terbitkan Resep</button>
+                        <a href="recipes.html" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 10px; display: block;">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
