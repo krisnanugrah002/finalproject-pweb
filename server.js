@@ -1,32 +1,42 @@
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
-// Load env vars
 dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(express.json()); // Untuk parsing body request JSON
-app.use(express.urlencoded({ extended: true })); // Untuk parsing form data
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Static Files Serving (PENTING: Ini yang membuat folder public bisa diakses browser)
-// Logic: Jika browser minta 'style.css', cari di folder public.
+// Static Files (Frontend)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Basic Route for Testing
-// Karena kita pakai express.static, route '/' otomatis mencari index.html di public.
-// Tapi kita bisa buat route eksplisit jika nanti butuh.
+// Load Routes (Backend)
+const authRoutes = require('./src/routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
+const weightRoutes = require('./src/routes/weightRoutes');
+app.use('/api/weights', weightRoutes);
+
+const foodRoutes = require('./src/routes/foodRoutes');
+app.use('/api/foods', foodRoutes);
+
+const activityRoutes = require('./src/routes/activityRoutes');
+app.use('/api/activities', activityRoutes);
+
+// Test Route
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'OK', message: 'Server FitMate berjalan dengan baik!' });
+    res.json({ status: 'OK', message: 'Server FitMate berjalan!' });
 });
 
-// Start Server
 app.listen(PORT, () => {
     console.log(`\n==================================================`);
     console.log(`Server FitMate berjalan di: http://localhost:${PORT}`);
     console.log(`Serving Static files dari folder: /public`);
     console.log(`==================================================\n`);
 });
+

@@ -62,12 +62,35 @@
     </div>
 
     <script>
-        // Placeholder Script (Logic akan kita buat di langkah berikutnya)
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Fitur Login akan diaktifkan setelah Backend siap!');
-        });
-    </script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const msg = document.getElementById('message');
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                localStorage.setItem('fitmate_token', data.token);
+                alert('Login Berhasil!');
+                window.location.href = 'dashboard.html';
+            } else {
+                msg.textContent = data.message;
+                msg.style.color = 'red';
+            }
+        } catch (err) {
+            console.error(err);
+            msg.textContent = 'Server Error';
+        }
+    });
+</script>
+<script src="js/app.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
