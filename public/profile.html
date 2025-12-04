@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Saya - FitMate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .profile-label { color: var(--text-gray); font-weight: 500; }
+        .profile-value { font-weight: 600; color: var(--text-dark); }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+            border: 1px solid #ef4444;
+        }
+        .btn-danger:hover { background-color: #dc2626; }
+        
+        .edit-input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">Fit<span>Mate</span>.</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="calculator.html">Kalkulator BMI</a></li>
+                <li><a href="recipes.html">Menu Sehat</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Masuk</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section bg-light">
+        <div class="container">
+            <div class="form-container" style="max-width: 500px;">
+                <div class="section-title">
+                    <h2>Profil Saya</h2>
+                    <p>Informasi akun Anda</p>
+                </div>
+
+                <!-- MODE TAMPILAN (READ ONLY) -->
+                <div id="viewMode">
+                    <div class="profile-info-row">
+                        <span class="profile-label">Nama Lengkap</span>
+                        <span class="profile-value" id="view_fullname">-</span>
+                    </div>
+                    <div class="profile-info-row">
+                        <span class="profile-label">Email</span>
+                        <span class="profile-value" id="view_email">-</span>
+                    </div>
+                    <div class="profile-info-row">
+                        <span class="profile-label">Tinggi Badan</span>
+                        <span class="profile-value"><span id="view_height">0</span> cm</span>
+                    </div>
+                    <div class="profile-info-row">
+                        <span class="profile-label">Berat Badan</span>
+                        <span class="profile-value"><span id="view_weight">0</span> kg</span>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="btnEditProfile" class="btn btn-primary" style="flex: 1;">Edit Profil</button>
+                        <button id="btnDeleteAccount" class="btn btn-danger" style="flex: 1;">Hapus Akun</button>
+                    </div>
+                </div>
+
+                <!-- MODE EDIT (FORM) -->
+                <form id="editMode" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Nama Lengkap</label>
+                        <input type="text" id="edit_fullname" class="edit-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="edit_email" class="edit-input" disabled style="background-color: #f3f4f6; cursor: not-allowed;">
+                        <small style="color: #999;">Email tidak dapat diubah.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tinggi Badan (cm)</label>
+                        <input type="number" id="edit_height" class="edit-input" disabled style="background-color: #f3f4f6; cursor: not-allowed;">
+                         <small style="color: #999;">Tinggi badan tidak dapat diubah.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Berat Badan (kg)</label>
+                        <input type="number" id="edit_weight" class="edit-input" required>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" id="btnCancelEdit" class="btn btn-outline" style="flex: 1;">Batal</button>
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">Simpan</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="js/app.js"></script>
+    <script src="js/profile.js"></script>
+
+</body>
+</html>

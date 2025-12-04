@@ -12,6 +12,9 @@
     <nav class="navbar">
         <div class="container navbar-content">
             <a href="index.html" class="logo">Fit<span>Mate</span>.</a>
+            <div class="auth-buttons">
+                <a href="recipes.html" class="btn btn-outline">Kembali</a>
+            </div>
         </div>
     </nav>
 
@@ -20,23 +23,23 @@
             <div class="form-container">
                 <div class="section-title">
                     <h2>Bagikan Resep Sehatmu</h2>
-                    <p>Bantu orang lain hidup lebih sehat dengan resep andalanmu.</p>
+                    <p>Bantu orang lain hidup lebih sehat.</p>
                 </div>
 
                 <form id="addRecipeForm">
                     <div class="form-group">
                         <label class="form-label">Judul Resep</label>
-                        <input type="text" name="title" class="form-input" placeholder="Contoh: Salad Buah Segar" required>
+                        <input type="text" id="r_title" class="form-input" placeholder="Contoh: Salad Buah" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Estimasi Kalori (per porsi)</label>
-                        <input type="number" name="calories" class="form-input" placeholder="Contoh: 250" required>
+                        <label class="form-label">Estimasi Kalori</label>
+                        <input type="number" id="r_calories" class="form-input" placeholder="Contoh: 250" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Kategori</label>
-                        <select name="category" class="form-select">
+                        <select id="r_category" class="form-select">
                             <option value="Sarapan">Sarapan</option>
                             <option value="Makan Siang">Makan Siang</option>
                             <option value="Makan Malam">Makan Malam</option>
@@ -46,29 +49,29 @@
 
                     <div class="form-group">
                         <label class="form-label">Bahan-bahan</label>
-                        <textarea name="ingredients" class="form-textarea" placeholder="Tuliskan bahan-bahan di sini..." required></textarea>
+                        <textarea id="r_ingredients" class="form-textarea" placeholder="Tuliskan bahan-bahan..." required></textarea>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Langkah Pembuatan</label>
-                        <textarea name="instructions" class="form-textarea" placeholder="Langkah 1: Kupas buah..." required></textarea>
+                        <textarea id="r_instructions" class="form-textarea" placeholder="Langkah memasak..." required></textarea>
                     </div>
 
-                    <!-- Untuk MVP, kita pakai URL gambar dulu, bukan Upload File agar lebih mudah -->
                     <div class="form-group">
-                        <label class="form-label">URL Foto Makanan</label>
-                        <input type="url" name="image_url" class="form-input" placeholder="https://...">
-                        <small style="color: var(--text-gray); font-size: 0.8rem;">Masukkan link gambar dari internet.</small>
+                        <label class="form-label">URL Foto (Opsional)</label>
+                        <input type="url" id="r_image" class="form-input" placeholder="https://...">
                     </div>
 
                     <div style="margin-top: 30px;">
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Terbitkan Resep</button>
-                        <a href="recipes.html" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 10px; display: block;">Batal</a>
                     </div>
                 </form>
             </div>
         </div>
     </section>
+
+    <!-- Script Wajib -->
+    <script src="js/add-recipe.js"></script>
 
 </body>
 </html>

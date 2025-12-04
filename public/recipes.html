@@ -9,7 +9,6 @@
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="container navbar-content">
             <a href="index.html" class="logo">Fit<span>Mate</span>.</a>
@@ -19,14 +18,12 @@
                 <li><a href="recipes.html" class="active">Menu Sehat</a></li>
             </ul>
             <div class="auth-buttons">
-                <!-- Nanti logika JS: Jika login, tampilkan Profil. Jika belum, tampilkan Login -->
                 <a href="login.html" class="btn btn-outline">Masuk</a>
                 <a href="register.html" class="btn btn-primary">Daftar Sekarang</a>
             </div>
         </div>
     </nav>
 
-    <!-- CONTENT -->
     <section class="section bg-light">
         <div class="container">
             <div class="page-header">
@@ -34,70 +31,25 @@
                     <h2>Galeri Menu Sehat</h2>
                     <p>Temukan inspirasi makanan sehat dari komunitas kami.</p>
                 </div>
-                <!-- Tombol ini nanti hanya muncul jika User Login -->
                 <a href="add-recipe.html" class="fab-add">
                     <span>+</span> Bagikan Resepmu
                 </a>
             </div>
 
-            <!-- SEARCH / FILTER (Optional Feature) -->
-            <div style="margin-bottom: 30px;">
-                <input type="text" placeholder="Cari resep (misal: Oatmeal)..." class="form-input" style="max-width: 400px;">
-            </div>
-
-            <!-- RECIPE GRID -->
-            <div class="grid-3" id="recipe-list">
-                <!-- Static Content (Nanti akan diganti Fetch API) -->
-                
-                <div class="card recipe-card">
-                    <div class="recipe-img" style="background-color: #ddd;"></div>
-                    <div class="recipe-content">
-                        <span class="tag">Sarapan</span>
-                        <h3>Avocado Toast Spesial</h3>
-                        <div class="recipe-meta">
-                            <span>🔥 350 kkal</span>
-                            <span>👤 oleh Admin</span>
-                        </div>
-                        <a href="#" class="btn-sm">Lihat Detail</a>
-                    </div>
-                </div>
-
-                <div class="card recipe-card">
-                    <div class="recipe-img" style="background-color: #ddd;"></div>
-                    <div class="recipe-content">
-                        <span class="tag">Makan Siang</span>
-                        <h3>Salad Ayam Panggang</h3>
-                        <div class="recipe-meta">
-                            <span>🔥 420 kkal</span>
-                            <span>👤 oleh Budi</span>
-                        </div>
-                        <a href="#" class="btn-sm">Lihat Detail</a>
-                    </div>
-                </div>
-
-                <div class="card recipe-card">
-                    <div class="recipe-img" style="background-color: #ddd;"></div>
-                    <div class="recipe-content">
-                        <span class="tag">Minuman</span>
-                        <h3>Green Detox Smoothie</h3>
-                        <div class="recipe-meta">
-                            <span>🔥 180 kkal</span>
-                            <span>👤 oleh Siti</span>
-                        </div>
-                        <a href="#" class="btn-sm">Lihat Detail</a>
-                    </div>
-                </div>
-
+            <div class="grid-3" id="recipeListContainer">
+                <p style="text-align:center; grid-column: 1/-1;">Sedang memuat resep...</p>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
-        <div class="container">
+        <div class="container footer-content">
             <p>&copy; 2025 FitMate.</p>
         </div>
     </footer>
+
+    <script src="js/app.js"></script> 
+    <script src="js/recipes.js"></script> 
 
 </body>
 </html>

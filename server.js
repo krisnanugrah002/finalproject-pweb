@@ -28,6 +28,11 @@ app.use('/api/foods', foodRoutes);
 const activityRoutes = require('./src/routes/activityRoutes');
 app.use('/api/activities', activityRoutes);
 
+// --- BARU: Route Resep ---
+const recipeRoutes = require('./src/routes/recipeRoutes');
+app.use('/api/recipes', recipeRoutes);
+// ------------------------
+
 // Test Route
 app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Server FitMate berjalan!' });
@@ -39,4 +44,3 @@ app.listen(PORT, () => {
     console.log(`Serving Static files dari folder: /public`);
     console.log(`==================================================\n`);
 });
-

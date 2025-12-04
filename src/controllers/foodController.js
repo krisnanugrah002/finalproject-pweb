@@ -1,21 +1,22 @@
 const db = require('../config/db');
 
-// 1. GET FOODS (READ) - Ambil daftar makanan berdasarkan tanggal
+// 1. GET FOODS (READ)
 exports.getFoods = async (req, res) => {
     const { date } = req.query;
     try {
         if (!date) return res.status(400).json({ message: 'Tanggal diperlukan' });
 
+        // FIX: Ganti 'ORDER BY created_at' (kolom ga ada) jadi 'ORDER BY id'
         const [foods] = await db.query(
-            'SELECT * FROM food_logs WHERE user_id = ? AND date = ? ORDER BY created_at DESC', 
+            'SELECT * FROM food_logs WHERE user_id = ? AND date = ? ORDER BY id DESC', 
             [req.user.id, date]
         );
         
-        // Hitung total kalori 
         const totalCalories = foods.reduce((sum, item) => sum + item.calories, 0);
 
         res.json({ data: foods, total: totalCalories });
     } catch (err) {
+        console.error("Error getFoods:", err); // Log error ke terminal biar ketahuan
         res.status(500).json({ message: err.message });
     }
 };
@@ -24,17 +25,19 @@ exports.getFoods = async (req, res) => {
 exports.addFood = async (req, res) => {
     const { food_name, calories, date } = req.body;
     try {
+        // FIX: Tambahkan 'Snack' sebagai default meal_time karena kolom ini wajib (NOT NULL) di DB
         await db.query(
-            'INSERT INTO food_logs (user_id, food_name, calories, date) VALUES (?, ?, ?, ?)',
-            [req.user.id, food_name, calories, date]
+            'INSERT INTO food_logs (user_id, food_name, calories, date, meal_time) VALUES (?, ?, ?, ?, ?)',
+            [req.user.id, food_name, calories, date, 'Snack']
         );
         res.status(201).json({ message: 'Makanan berhasil dicatat!' });
     } catch (err) {
+        console.error("Error addFood:", err);
         res.status(500).json({ message: err.message });
     }
 };
 
-// 3. DELETE FOOD (DELETE)
+// 3. DELETE FOOD
 exports.deleteFood = async (req, res) => {
     const { id } = req.params;
     try {
@@ -45,7 +48,7 @@ exports.deleteFood = async (req, res) => {
     }
 };
 
-// 4. UPDATE FOOD (UPDATE)
+// 4. UPDATE FOOD
 exports.updateFood = async (req, res) => {
     const { id } = req.params;
     const { food_name, calories } = req.body;

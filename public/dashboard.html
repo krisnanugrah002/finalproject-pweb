@@ -6,12 +6,11 @@
     <title>Dashboard Saya - FitMate</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr; /* Grafik lebih lebar dari ringkasan */
+            grid-template-columns: 2fr 1fr;
             gap: 30px;
             margin-bottom: 30px;
         }
@@ -54,6 +53,11 @@
             align-items: center;
         }
         
+        /* Input Date Styling */
+        .date-input-group {
+            margin-bottom: 15px;
+        }
+        
         @media (max-width: 768px) {
             .dashboard-grid { grid-template-columns: 1fr; }
         }
@@ -64,8 +68,12 @@
     <nav class="navbar">
         <div class="container navbar-content">
             <a href="index.html" class="logo">Fit<span>Mate</span>.</a>
+             <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="calculator.html">Kalkulator BMI</a></li>
+                <li><a href="recipes.html">Menu Sehat</a></li>
+            </ul>
             <div class="auth-buttons">
-                <!-- Nanti diganti nama user dinamis -->
                 <span id="userNameDisplay" style="margin-right: 15px; font-weight: 600;">Halo, User!</span>
                 <button id="btnLogout" class="btn btn-outline" style="padding: 5px 15px; font-size: 0.8rem;">Keluar</button>
             </div>
@@ -75,13 +83,10 @@
     
     <section class="section bg-light" style="padding-top: 30px;">
         <div class="container">
-            <!-- HEADER DASHBOARD -->
             <div style="margin-bottom: 30px;">
                 <h2>Overview Hari Ini</h2>
-                <p class="text-gray" id="currentDate">Senin, 1 Januari 2025</p>
+                <p class="text-gray" id="currentDate">Memuat tanggal...</p>
             </div>
-
-            <!-- RINGKASAN ATAS -->
             <div class="grid-3 dashboard-grid" style="grid-template-columns: repeat(3, 1fr);">
                 <div class="stat-card">
                     <div class="stat-number" id="totalFood">0</div>
@@ -99,7 +104,7 @@
 
             <!-- GRAFIK BERAT BADAN -->
              <div class="card" style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 20px;">Grafik Berat Badan (7 Hari Terakhir)</h3>
+                <h3 style="margin-bottom: 20px;">Grafik Berat Badan</h3>
                 <div style="height: 300px;">
                     <canvas id="weightChart"></canvas>
                 </div>
@@ -115,62 +120,105 @@
 
                 <!-- TAB 1: MAKANAN -->
                 <div id="tab-food" class="tab-content">
-                    <form id="foodForm" style="display: flex; gap: 10px; margin-bottom: 20px;">
-                        <input type="text" placeholder="Nama Makanan (misal: Nasi Goreng)" class="form-input" style="flex: 2" required>
-                        <input type="number" placeholder="Kalori" class="form-input" style="flex: 1" required>
-                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    <form id="foodForm">
+                        <div class="date-input-group">
+                            <label class="form-label">Tanggal:</label>
+                            <input type="date" id="foodDate" class="form-input" required>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                            <input type="text" id="foodName" placeholder="Nama Makanan (misal: Nasi Goreng)" class="form-input" style="flex: 2" required>
+                            <input type="number" id="foodCal" placeholder="Kalori" class="form-input" style="flex: 1" required>
+                            <button type="submit" class="btn btn-primary">Tambah</button>
+                        </div>
                     </form>
                     <div id="foodList">
-                        <!-- List makanan akan muncul disini -->
-                        <div style="text-align: center; color: #999; padding: 20px;">Belum ada makanan dicatat hari ini</div>
+                        <div style="text-align: center; color: #999; padding: 20px;">Belum ada makanan dicatat.</div>
                     </div>
                 </div>
 
-                <!-- TAB 2: AKTIVITAS (Hidden) -->
+                <!-- TAB 2: AKTIVITAS -->
                 <div id="tab-activity" class="tab-content" style="display: none;">
-                    <form id="activityForm" style="display: flex; gap: 10px; margin-bottom: 20px;">
-                        <input type="text" placeholder="Nama Aktivitas (misal: Lari Pagi)" class="form-input" style="flex: 2" required>
-                        <input type="number" placeholder="Kalori Terbakar" class="form-input" style="flex: 1" required>
-                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    <form id="activityForm">
+                         <div class="date-input-group">
+                            <label class="form-label">Tanggal:</label>
+                            <input type="date" id="activityDate" class="form-input" required>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                            <input type="text" id="activityName" placeholder="Nama Aktivitas (misal: Lari Pagi)" class="form-input" style="flex: 2" required>
+                            <input type="number" id="activityCal" placeholder="Kalori Terbakar" class="form-input" style="flex: 1" required>
+                            <button type="submit" class="btn btn-primary">Tambah</button>
+                        </div>
                     </form>
                     <div id="activityList">
-                        <div style="text-align: center; color: #999; padding: 20px;">Belum ada aktivitas dicatat hari ini</div>
+                        <div style="text-align: center; color: #999; padding: 20px;">Belum ada aktivitas dicatat.</div>
                     </div>
                 </div>
 
-                <!-- TAB 3: BERAT BADAN (Hidden) -->
+                <!-- TAB 3: BERAT BADAN -->
                 <div id="tab-weight" class="tab-content" style="display: none;">
                     <form id="weightForm" style="max-width: 400px;">
                         <div class="form-group">
-                            <label>Berat Badan Hari Ini (kg)</label>
-                            <input type="number" step="0.1" class="form-input" required>
+                            <label class="form-label">Tanggal</label>
+                            <input type="date" id="weightDate" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Berat Badan (kg)</label>
+                            <input type="number" id="weightValue" step="0.1" class="form-input" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan Progress</button>
                     </form>
+
+                    <div style="margin-top: 20px;">
+                        <h4>Riwayat Berat Badan</h4>
+                        <div id="weightHistoryList" style="margin-top: 10px;"></div>
+                    </div>
                 </div>
              </div>
         </div>
+
+        <div id="editFoodModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000;">
+    <div class="modal-content" style="background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+        <h3 style="margin-bottom: 20px; color: var(--primary-color);">Edit Makanan</h3>
+        
+        <form id="editFoodForm">
+            <input type="hidden" id="editFoodId"> <!-- Menyimpan ID Makanan yang diedit -->
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label class="form-label">Nama Makanan</label>
+                <input type="text" id="editFoodName" class="form-input" required>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label class="form-label">Kalori</label>
+                <input type="number" id="editFoodCal" class="form-input" required>
+            </div>
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" onclick="closeEditModal()" class="btn btn-outline" style="border: 1px solid #ccc; color: #666;">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
     </section>
 
-    <!-- Script Chart & Logic -->
+    <script src="js/app.js"></script>
     <script src="js/dashboard.js"></script>
     <script>
-        // Simple Tab Switcher Logic inline for simplicity
         function switchTab(tabName) {
-            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             
-            // Show selected
             document.getElementById(`tab-${tabName}`).style.display = 'block';
-            // Highlight button (Need event target logic, but simple generic selector works)
+            
             const btns = document.querySelectorAll('.tab-btn');
             if(tabName === 'food') btns[0].classList.add('active');
             if(tabName === 'activity') btns[1].classList.add('active');
             if(tabName === 'weight') btns[2].classList.add('active');
         }
-        
     </script>
-    <script src="js/app.js"></script>
 </body>
 </html>

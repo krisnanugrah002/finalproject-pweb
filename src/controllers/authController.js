@@ -13,7 +13,7 @@ exports.register = async (req, res) => {
         const hash = await bcrypt.hash(password, salt);
 
         await db.query(
-            'INSERT INTO users (full_name, email, password, height, weight) VALUES (?, ?, ?, ?, ?)',
+            'INSERT INTO users (name, email, password, height, weight) VALUES (?, ?, ?, ?, ?)',
             [full_name, email, hash, height, weight]
         );
         res.status(201).json({ message: 'Registrasi berhasil!' });
@@ -35,16 +35,17 @@ exports.login = async (req, res) => {
 
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'rahasia_fitmate_123', { expiresIn: '1d' });
         
-        res.json({ message: 'Login sukses', token, user: { name: user.full_name, email: user.email } });
+        res.json({ message: 'Login sukses', token, user: { name: user.name, email: user.email } });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 
-// 3. GET PROFILE (READ - Dashboard)
 exports.getProfile = async (req, res) => {
     try {
-        const [users] = await db.query('SELECT id, full_name, email, height, weight FROM users WHERE id = ?', [req.user.id]);
+        const query = 'SELECT id, name, email, height, weight FROM users WHERE id = ?';
+        const [users] = await db.query(query, [req.user.id]);
+        
         if (!users.length) return res.status(404).json({ message: 'User not found' });
         res.json(users[0]);
     } catch (err) {
@@ -52,23 +53,25 @@ exports.getProfile = async (req, res) => {
     }
 };
 
-// 4. UPDATE PROFILE (UPDATE)
+
 exports.updateProfile = async (req, res) => {
     const { full_name, height, weight } = req.body;
+    
     try {
         const [currentUser] = await db.query('SELECT * FROM users WHERE id = ?', [req.user.id]);
+        if (!currentUser.length) return res.status(404).json({ message: 'User not found' });
+        
         const user = currentUser[0];
-
-        const newName = full_name || user.full_name;
-        const newHeight = height || user.height;
-        const newWeight = weight || user.weight;
-
-        await db.query(
-            'UPDATE users SET full_name = ?, height = ?, weight = ? WHERE id = ?',
-            [newName, newHeight, newWeight, req.user.id]
-        );
+        const newName = full_name || user.name; 
+        const newHeight = height !== undefined ? height : user.height; 
+        const newWeight = weight !== undefined ? weight : user.weight;
+        const query = 'UPDATE users SET name = ?, height = ?, weight = ? WHERE id = ?';
+        
+        await db.query(query, [newName, newHeight, newWeight, req.user.id]);
+        
         res.json({ message: 'Profil berhasil diperbarui!' });
     } catch (err) {
+        console.error(err);
         res.status(500).json({ message: err.message });
     }
 };
@@ -81,3 +84,6 @@ exports.deleteAccount = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+exports.register = async (req, res) => {  };
+exports.login = async (req, res) => { };

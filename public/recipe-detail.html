@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Resep - FitMate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .detail-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .detail-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            background-color: #eee;
+        }
+        .meta-tags {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+        .meta-item {
+            background: var(--bg-light);
+            padding: 8px 16px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .content-box {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        .content-title {
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        .instruction-step {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">Fit<span>Mate</span>.</a>
+             <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="calculator.html">Kalkulator BMI</a></li>
+                <li><a href="recipes.html">Menu Sehat</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="recipes.html" class="btn btn-outline">Kembali ke Galeri</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="container" style="max-width: 900px;">
+            <div id="loading" style="text-align: center;">Memuat detail resep...</div>
+
+            <div id="recipeContent" style="display: none;">
+                
+                <div class="detail-header">
+                    <span class="tag" id="r_cat">Kategori</span>
+                    <h1 id="r_title" style="font-size: 2.5rem; margin: 10px 0;">Judul Resep</h1>
+                    <p style="color: var(--text-gray);">Oleh <span id="r_author" style="font-weight: 600;">Author</span></p>
+                </div>
+
+                <img id="r_img" class="detail-img" src="" alt="Foto Resep">
+
+                <div class="meta-tags">
+                    <div class="meta-item">🔥 <span id="r_cal">0</span> kkal</div>
+                </div>
+
+                <div class="content-box">
+                    <h3 class="content-title">🛒 Bahan-bahan</h3>
+                    <div id="r_ingredients" style="white-space: pre-line;"></div>
+                </div>
+
+                <div class="content-box">
+                    <h3 class="content-title">👨‍🍳 Cara Membuat</h3>
+                    <div id="r_instructions" style="white-space: pre-line;"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <script src="js/app.js"></script>
+    <script src="js/recipe-detail.js"></script>
+
+</body>
+</html>
