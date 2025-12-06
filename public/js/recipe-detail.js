@@ -36,11 +36,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Handle Text Area (Bahan & Instruksi)
         document.getElementById('r_ingredients').textContent = recipe.ingredients;
         document.getElementById('r_instructions').textContent = recipe.instructions;
-        
+
         loading.style.display = 'none';
         container.style.display = 'block';
-
-        // Update Title Browser
         document.title = `${recipe.title} - FitMate`;
 
     } catch (err) {

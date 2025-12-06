@@ -3,7 +3,6 @@ const db = require('../config/db');
 // 1. GET LOGS (READ) - Mengambil history berat badan
 exports.getLogs = async (req, res) => {
     try {
-        // Ambil data diurutkan dari tanggal terbaru
         const [logs] = await db.query(
             'SELECT * FROM weight_logs WHERE user_id = ? ORDER BY date ASC', 
             [req.user.id]
@@ -16,29 +15,24 @@ exports.getLogs = async (req, res) => {
 
 // 2. ADD LOG (CREATE) - Menambah berat badan hari ini/tertentu
 exports.addLog = async (req, res) => {
-    const { weight, date } = req.body; // Date format: YYYY-MM-DD
+    const { weight, date } = req.body;
     try {
-        // Cek apakah tanggal ini sudah ada datanya?
         const [existing] = await db.query(
             'SELECT id FROM weight_logs WHERE user_id = ? AND date = ?',
             [req.user.id, date]
         );
 
         if (existing.length > 0) {
-            // Jika sudah ada, kita Update saja (Upsert logic)
             await db.query(
                 'UPDATE weight_logs SET weight = ? WHERE id = ?',
                 [weight, existing[0].id]
             );
         } else {
-            // Jika belum, Insert baru
             await db.query(
                 'INSERT INTO weight_logs (user_id, weight, date) VALUES (?, ?, ?)',
                 [req.user.id, weight, date]
             );
         }
-
-        // Opsional: Update juga berat badan 'current' di tabel users
         await db.query('UPDATE users SET weight = ? WHERE id = ?', [weight, req.user.id]);
 
         res.status(201).json({ message: 'Data berat badan tersimpan!' });
@@ -47,9 +41,9 @@ exports.addLog = async (req, res) => {
     }
 };
 
-// 3. UPDATE LOG (UPDATE) - Edit data salah input
+// 3. UPDATE LOG (UPDATE)
 exports.updateLog = async (req, res) => {
-    const { id } = req.params; // ID dari Log
+    const { id } = req.params;
     const { weight } = req.body;
     try {
         await db.query(

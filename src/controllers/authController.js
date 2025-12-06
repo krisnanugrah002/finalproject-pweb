@@ -84,6 +84,3 @@ exports.deleteAccount = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-
-exports.register = async (req, res) => {  };
-exports.login = async (req, res) => { };

@@ -44,7 +44,6 @@
             border-bottom-color: var(--primary-color);
         }
         
-        /* List Item Style */
         .log-item {
             display: flex;
             justify-content: space-between;
@@ -53,7 +52,6 @@
             align-items: center;
         }
         
-        /* Input Date Styling */
         .date-input-group {
             margin-bottom: 15px;
         }
@@ -102,7 +100,6 @@
                 </div>
             </div>
 
-            <!-- GRAFIK BERAT BADAN -->
              <div class="card" style="margin-bottom: 30px;">
                 <h3 style="margin-bottom: 20px;">Grafik Berat Badan</h3>
                 <div style="height: 300px;">
@@ -110,7 +107,6 @@
                 </div>
              </div>
 
-             <!-- JURNAL INPUT AREA (Tabs) -->
              <div class="card">
                 <div class="tab-menu">
                     <button class="tab-btn active" onclick="switchTab('food')">🍽️ Jurnal Makanan</button>
@@ -118,7 +114,6 @@
                     <button class="tab-btn" onclick="switchTab('weight')">⚖️ Update Berat</button>
                 </div>
 
-                <!-- TAB 1: MAKANAN -->
                 <div id="tab-food" class="tab-content">
                     <form id="foodForm">
                         <div class="date-input-group">
@@ -137,7 +132,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: AKTIVITAS -->
                 <div id="tab-activity" class="tab-content" style="display: none;">
                     <form id="activityForm">
                          <div class="date-input-group">
@@ -156,7 +150,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 3: BERAT BADAN -->
                 <div id="tab-weight" class="tab-content" style="display: none;">
                     <form id="weightForm" style="max-width: 400px;">
                         <div class="form-group">
@@ -184,7 +177,7 @@
         <h3 style="margin-bottom: 20px; color: var(--primary-color);">Edit Makanan</h3>
         
         <form id="editFoodForm">
-            <input type="hidden" id="editFoodId"> <!-- Menyimpan ID Makanan yang diedit -->
+            <input type="hidden" id="editFoodId"> 
             
             <div class="form-group" style="margin-bottom: 15px;">
                 <label class="form-label">Nama Makanan</label>

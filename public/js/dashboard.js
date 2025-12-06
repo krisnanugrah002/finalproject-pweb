@@ -38,8 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         elements.activity.addEventListener('change', () => loadActivityLog());
     }
 
-    // --- 3. DEFINISI FUNGSI-FUNGSI LOGIC ---
-
     // A. LOGIC MAKANAN
     window.loadFoodLog = async (dateOverride = null) => {
         const dateVal = dateOverride || (elements.food ? elements.food.value : todayStr);
@@ -350,7 +348,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // === F. EVENT LISTENERS (FORM SUBMIT) ===
+    // === F. EVENT LISTENER ===
 
     const foodForm = document.getElementById('foodForm');
     if (foodForm) {
@@ -435,11 +433,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.href = 'index.html';
         });
     }
-
-    // --- G. EKSEKUSI LOAD DATA AWAL ---
     
-    // 1. Load Data Jurnal (Langsung, tanpa menunggu profile)
-    // Delay 50ms untuk memastikan input date HTML sudah benar-benar terisi valuenya oleh step 2
+    // 1. Load Data Jurnal
     setTimeout(() => {
         loadWeightHistory();
         loadFoodLog(todayStr); 

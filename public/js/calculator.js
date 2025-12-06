@@ -27,19 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (bmi < 18.5) {
             category = 'Underweight (Kurus)';
-            color = '#f59e0b'; // Kuning
+            color = '#f59e0b'; 
         } else if (bmi >= 18.5 && bmi < 24.9) {
             category = 'Ideal (Normal)';
-            color = '#10B981'; // Hijau
+            color = '#10B981';
         } else if (bmi >= 25 && bmi < 29.9) {
             category = 'Overweight (Gemuk)';
-            color = '#f97316'; // Oranye
+            color = '#f97316'; 
         } else {
             category = 'Obesity (Obesitas)';
-            color = '#ef4444'; // Merah
+            color = '#ef4444'; 
         }
 
-        // 4. Hitung BMR (Mifflin-St Jeor Equation)
+        // 4. Hitung BMR
         let bmr = 0;
         if (gender === 'male') {
             bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
@@ -55,8 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         bmiCategory.textContent = category;
         bmiCategory.style.color = color;
         tdeeValue.textContent = `${tdee.toLocaleString()} kkal / hari`;
-
-        // Animasi Fade In sederhana
         resultArea.style.display = 'flex';
         resultArea.scrollIntoView({ behavior: 'smooth' });
     });

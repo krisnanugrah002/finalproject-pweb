@@ -3,7 +3,6 @@ const db = require('../config/db');
 // 1. GET ALL RECIPES (READ)
 exports.getAllRecipes = async (req, res) => {
     try {
-        // Mengambil semua resep digabung dengan nama pembuatnya
         const query = `
             SELECT r.*, u.name AS creator_name 
             FROM recipes r 
@@ -22,7 +21,6 @@ exports.getAllRecipes = async (req, res) => {
 exports.createRecipe = async (req, res) => {
     const { title, calories, category, ingredients, instructions, image_url } = req.body;
     
-    // Validasi sederhana
     if (!title || !calories || !category) {
         return res.status(400).json({ message: 'Judul, Kalori, dan Kategori wajib diisi!' });
     }
@@ -34,7 +32,7 @@ exports.createRecipe = async (req, res) => {
         `;
         
         await db.query(query, [
-            req.user.id, // ID user dari token JWT
+            req.user.id, 
             title, 
             category, 
             calories, 
@@ -54,7 +52,7 @@ exports.createRecipe = async (req, res) => {
 exports.deleteRecipe = async (req, res) => {
     const { id } = req.params;
     try {
-        // Cek apakah resep milik user yang login
+
         const [check] = await db.query('SELECT user_id FROM recipes WHERE id = ?', [id]);
         
         if (check.length === 0) return res.status(404).json({ message: 'Resep tidak ditemukan' });
@@ -67,7 +65,7 @@ exports.deleteRecipe = async (req, res) => {
     }
 };
 
-// 3. GET SINGLE RECIPE (READ) - Tambahkan fungsi ini
+// 3. GET SINGLE RECIPE (READ)
 exports.getRecipeById = async (req, res) => {
     const { id } = req.params;
     try {

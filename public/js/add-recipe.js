@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Cek Login (Halaman ini butuh auth)
+    // 1. Cek Login
     const token = localStorage.getItem('fitmate_token');
     if (!token) {
         alert('Silakan login terlebih dahulu untuk menambah resep.');

@@ -7,15 +7,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Static Files (Frontend)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Load Routes (Backend)
 const authRoutes = require('./src/routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
@@ -28,10 +25,9 @@ app.use('/api/foods', foodRoutes);
 const activityRoutes = require('./src/routes/activityRoutes');
 app.use('/api/activities', activityRoutes);
 
-// --- BARU: Route Resep ---
 const recipeRoutes = require('./src/routes/recipeRoutes');
 app.use('/api/recipes', recipeRoutes);
-// ------------------------
+
 
 // Test Route
 app.get('/api/health', (req, res) => {

@@ -1,9 +1,3 @@
-/**
- * APP.JS - Global Logic
- * File ini harus dipanggil di SETIAP halaman HTML.
- * Bertugas mengatur UI Navbar (Login vs Logout state).
- */
-
 document.addEventListener('DOMContentLoaded', () => {
     checkAuthState();
 });

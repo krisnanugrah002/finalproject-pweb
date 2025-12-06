@@ -5,8 +5,6 @@ exports.getFoods = async (req, res) => {
     const { date } = req.query;
     try {
         if (!date) return res.status(400).json({ message: 'Tanggal diperlukan' });
-
-        // FIX: Ganti 'ORDER BY created_at' (kolom ga ada) jadi 'ORDER BY id'
         const [foods] = await db.query(
             'SELECT * FROM food_logs WHERE user_id = ? AND date = ? ORDER BY id DESC', 
             [req.user.id, date]
@@ -16,7 +14,7 @@ exports.getFoods = async (req, res) => {
 
         res.json({ data: foods, total: totalCalories });
     } catch (err) {
-        console.error("Error getFoods:", err); // Log error ke terminal biar ketahuan
+        console.error("Error getFoods:", err); 
         res.status(500).json({ message: err.message });
     }
 };
@@ -25,7 +23,6 @@ exports.getFoods = async (req, res) => {
 exports.addFood = async (req, res) => {
     const { food_name, calories, date } = req.body;
     try {
-        // FIX: Tambahkan 'Snack' sebagai default meal_time karena kolom ini wajib (NOT NULL) di DB
         await db.query(
             'INSERT INTO food_logs (user_id, food_name, calories, date, meal_time) VALUES (?, ?, ?, ?, ?)',
             [req.user.id, food_name, calories, date, 'Snack']
